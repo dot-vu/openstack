@@ -105,6 +105,13 @@ trait OperatorTrait
             $options += $userValues['requestOptions'];
         }
 
+        if (array_key_exists('rawHttpHeaders', $userValues)) {
+            $options['headers'] = array_merge(
+                $options['headers'] ?? [],
+                $userValues['rawHttpHeaders'] ?? []
+            );
+        }
+
         $options['openstack.skip_auth'] = $operation->getSkipAuth();
 
         return $this->client->$method($operation->getMethod(), $uri, $options);
